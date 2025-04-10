@@ -1,3 +1,4 @@
+tensorflow
 torch
 transformers
 opencv-python
