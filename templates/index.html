@@ -1,39 +1,27 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Emotion Detection via ViT</title>
+  <title>Select Emotion Detection Model</title>
 </head>
 <body>
-  <h2>Webcam Emotion Detector</h2>
-  <video id="video" width="320" height="240" autoplay></video>
-  <canvas id="canvas" width="320" height="240" style="display:none;"></canvas>
-  <p id="emotion"></p>
+  <h2>Select Emotion Detection Model</h2>
+
+  <label for="model">Choose Model:</label>
+  <select id="model">
+    <option value="" selected disabled>-- Select Model --</option>
+    <option value="vit">Vision Transformer (ViT)</option>
+    <option value="cnn">CNN + Keras Transformer</option>
+  </select>
+
   <script>
-    const video = document.getElementById("video");
-    const canvas = document.getElementById("canvas");
-    const context = canvas.getContext("2d");
-    const emotionText = document.getElementById("emotion");
-
-    navigator.mediaDevices.getUserMedia({ video: true }).then(stream => {
-      video.srcObject = stream;
+    document.getElementById("model").addEventListener("change", function () {
+      const model = this.value;
+      if (model === "cnn") {
+        window.location.href = "/cnnkeras";
+      } else if (model === "vit") {
+        window.location.href = "/vit";
+      }
     });
-
-    setInterval(() => {
-      context.drawImage(video, 0, 0, canvas.width, canvas.height);
-      canvas.toBlob(blob => {
-        const formData = new FormData();
-        formData.append("frame", blob, "frame.jpg");
-
-        fetch("http://127.0.0.1:7860/analyze", {
-          method: "POST",
-          body: formData,
-        })
-        .then(response => response.json())
-        .then(data => {
-          emotionText.textContent = "Detected Emotion: " + data.emotion;
-        });
-      }, "image/jpeg");
-    }, 3000); // every 3 seconds
   </script>
 </body>
 </html>

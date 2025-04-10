@@ -24,7 +24,7 @@
         const formData = new FormData();
         formData.append("frame", blob, "frame.jpg");
 
-        fetch("http://127.0.0.1:7860/analyze", {
+        fetch("https://ae39-13-232-23-10.ngrok-free.app/analyze", {
           method: "POST",
           body: formData,
         })

@@ -1,0 +1,33 @@
+python3 -m venv venv
+source venv/bin/activate
+
+# Install dependencies
+pip install --upgrade pip
+pip install -r requirements.txt
+
+
+python app.py
+
+
+flask run --host=0.0.0.0 --port=5000
+
+
+
+
+
+ngrok config add-authtoken 2Pz1X9nABC1234567890abcdefg
+
+
+Authtoken saved to configuration file: /home/ubuntu/.config/ngrok/ngrok.yml
+
+
+ngrok http 7860
+
+
+
+sudo apt install tmux
+tmux new -s emotionapp
+python app.py --host=0.0.0.0 --port=7860
+ngrok http 7860
+tmux attach -t emotionappNGORK
+

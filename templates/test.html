@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Select Emotion Detection Model</title>
+</head>
+<body>
+  <h2>Select Emotion Detection Model</h2>
+
+  <label for="model">Choose Model:</label>
+  <select id="model">
+    <option value="" selected disabled>-- Select Model --</option>
+    <option value="vit">Vision Transformer (ViT)</option>
+    <option value="cnn">CNN + Keras Transformer</option>
+  </select>
+
+  <script>
+    document.getElementById("model").addEventListener("change", function () {
+      const model = this.value;
+      if (model === "cnn") {
+        window.location.href = "/indexcnnkeras";
+      } else if (model === "vit") {
+        window.location.href = "/index";
+      }
+    });
+  </script>
+</body>
+</html>

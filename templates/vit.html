@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Emotion Detection via ViT</title>
+</head>
+<body>
+  <h2>Webcam Emotion Detector</h2>
+  <video id="video" width="320" height="240" autoplay></video>
+  <canvas id="canvas" width="320" height="240" style="display:none;"></canvas>
+  <p id="emotion"></p>
+  <script>
+    const video = document.getElementById("video");
+    const canvas = document.getElementById("canvas");
+    const context = canvas.getContext("2d");
+    const emotionText = document.getElementById("emotion");
+
+    navigator.mediaDevices.getUserMedia({ video: true }).then(stream => {
+      video.srcObject = stream;
+    });
+
+    setInterval(() => {
+      context.drawImage(video, 0, 0, canvas.width, canvas.height);
+      canvas.toBlob(blob => {
+        const formData = new FormData();
+        formData.append("frame", blob, "frame.jpg");
+
+        fetch("https://ae39-13-232-23-10.ngrok-free.app/analyze", {
+          method: "POST",
+          body: formData,
+        })
+        .then(response => response.json())
+        .then(data => {
+          emotionText.textContent = "Detected Emotion: " + data.emotion;
+        });
+      }, "image/jpeg");
+    }, 3000); // every 3 seconds
+  </script>
+  <button onclick="window.location.href='https://ae39-13-232-23-10.ngrok-free.app/'">⬅ Back to Model Selection</button>
+</body>
+</html>
