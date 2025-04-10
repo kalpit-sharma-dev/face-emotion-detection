@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify , render_template
 from flask_cors import CORS
 from model.clip_emotion import detect_emotion
 import cv2
@@ -9,6 +9,11 @@ CORS(app)
 
 UPLOAD_FOLDER = "temp_frames"
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
+
+@app.route('/')
+def home():
+    return render_template('index.html')
+
 
 @app.route("/analyze", methods=["POST"])
 def analyze():
