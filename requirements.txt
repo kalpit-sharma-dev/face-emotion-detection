@@ -1,0 +1,10 @@
+torch
+transformers
+opencv-python
+flask
+flask-cors
+Pillow
+ftfy
+regex
+tqdm
+git+https://github.com/openai/CLIP.git
