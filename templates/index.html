@@ -25,16 +25,25 @@
   <select id="model">
     <option value="" selected disabled>-- Select Model --</option>
     <option value="vit">Vision Transformer (ViT)</option>
-    <option value="cnn">CNN + Keras Tensorflow</option>
+    <option value="cnnkeras">CNN + Keras Tensorflow</option>
+    <option value="cnnonly">CNN</option>
+    <option value="cnnresnet">CNN + Resnet </option>
+    <option value="cnnlstm">CNN + LSTM </option>
   </select>
 
   <script>
     document.getElementById("model").addEventListener("change", function () {
       const model = this.value;
-      if (model === "cnn") {
+      if (model === "cnnkeras") {
         window.location.href = "/cnnkeras";
       } else if (model === "vit") {
         window.location.href = "/vit";
+      } else if (model === "cnnlstm") {
+        window.location.href = "/cnnlstm";
+      }else if (model === "cnnresnet") {
+        window.location.href = "/cnn_resnet";
+      }else if (model === "cnnonly") {
+        window.location.href = "/cnn";
       }
     });
   </script>
