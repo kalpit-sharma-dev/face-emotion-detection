@@ -2,12 +2,27 @@
 <html>
 <head>
   <title>Emotion Detection via ViT</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+    }
+    #video, #canvas {
+      border: 2px solid #444;
+      border-radius: 8px;
+      margin: 10px;
+    }
+    #result {
+      font-size: 18px;
+      font-weight: bold;
+    }
+  </style>
 </head>
 <body>
-  <h2>Webcam Emotion Detector</h2>
+  <h2>Webcam CNN Keras Emotion Detector</h2>
   <video id="video" width="320" height="240" autoplay></video>
   <canvas id="canvas" width="320" height="240" style="display:none;"></canvas>
-  <p id="emotion"></p>
+  <p id="emotion">Waiting for detection...</p>
   <script>
     const video = document.getElementById("video");
     const canvas = document.getElementById("canvas");

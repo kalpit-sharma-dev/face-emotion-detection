@@ -1,6 +1,6 @@
 from flask import Flask, request, jsonify , render_template , Response
 from flask_cors import CORS
-from models.clip_emotion import detect_emotion
+from models.clip_emotion import detect_emotion , detect_age
 import cv2
 from camera import VideoCamera
 import os
@@ -59,7 +59,8 @@ def analyze():
 
     try:
         emotion, scores = detect_emotion(filepath)
-        return jsonify({"emotion": emotion, "scores": scores})
+        age, age_scores = detect_age(filepath)
+        return jsonify({"emotion": emotion, "scores": scores, "age": age})
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 

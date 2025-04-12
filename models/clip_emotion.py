@@ -7,6 +7,9 @@ device = "cuda" if torch.cuda.is_available() else "cpu"
 model, preprocess = clip.load("ViT-B/32", device=device)
 
 EMOTION_LABELS = ["happy", "sad", "angry", "surprised", "neutral", "disgusted", "fearful"]
+AGE_LABELS = [
+    "a child", "a teenager", "a young adult", "a middle-aged person", "an elderly person"
+]
 
 def detect_emotion(image_path):
     image = preprocess(Image.open(image_path)).unsqueeze(0).to(device)
@@ -21,3 +24,15 @@ def detect_emotion(image_path):
     result = dict(zip(EMOTION_LABELS, probs.tolist()))
     top_emotion = max(result, key=result.get)
     return top_emotion, result
+
+def detect_age(image_path):
+    image = preprocess(Image.open(image_path)).unsqueeze(0).to(device)
+    text_inputs = torch.cat([clip.tokenize(f"This is {label}") for label in AGE_LABELS]).to(device)
+
+    with torch.no_grad():
+        logits_per_image, _ = model(image, text_inputs)
+        probs = logits_per_image.softmax(dim=-1).cpu().numpy().flatten()
+
+    result = dict(zip(AGE_LABELS, probs.tolist()))
+    top_age = max(result, key=result.get)
+    return top_age, result
