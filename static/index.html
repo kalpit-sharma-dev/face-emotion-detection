@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Emotion Detection via ViT</title>
+  <title>Emotion Detection</title>
 </head>
 <body>
   <h2>Webcam Emotion Detector</h2>
@@ -24,7 +24,7 @@
         const formData = new FormData();
         formData.append("frame", blob, "frame.jpg");
 
-        fetch("https://ae39-13-232-23-10.ngrok-free.app/analyze", {
+        fetch("http://127.0.0.1:7860/analyze", {
           method: "POST",
           body: formData,
         })

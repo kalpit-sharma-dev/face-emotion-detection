@@ -4,6 +4,7 @@ from models.clip_emotion import detect_emotion
 import cv2
 from camera import VideoCamera
 import os
+from cnn_emotion import detect_emotion as detect_emotion_cnn
 
 app = Flask(__name__)
 CORS(app)
@@ -30,10 +31,22 @@ def gen(camera):
         yield (b'--frame\r\n'
                b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n\r\n')
 
-@app.route('/video_feed')
+@app.route('/video_feed', methods=["POST"])
 def video_feed():
-    return Response(gen(VideoCamera()),
-                    mimetype='multipart/x-mixed-replace; boundary=frame')
+    # return Response(gen(VideoCamera()),
+    #                 mimetype='multipart/x-mixed-replace; boundary=frame')
+    
+    if "frame" not in request.files:
+        return jsonify({"error": "No frame received"}), 400
+
+    file = request.files["frame"]
+    filepath = os.path.join(UPLOAD_FOLDER, file.filename)
+    file.save(filepath)
+    try:
+        emotion, image_base64 = detect_emotion_cnn(filepath)
+        return jsonify({"emotion": emotion, "image": image_base64})
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
 
 @app.route("/analyze", methods=["POST"])
 def analyze():

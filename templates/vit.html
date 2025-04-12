@@ -24,7 +24,7 @@
         const formData = new FormData();
         formData.append("frame", blob, "frame.jpg");
 
-        fetch("https://ae39-13-232-23-10.ngrok-free.app/analyze", {
+        fetch("http://127.0.0.1:7860/analyze", {
           method: "POST",
           body: formData,
         })
@@ -33,8 +33,8 @@
           emotionText.textContent = "Detected Emotion: " + data.emotion;
         });
       }, "image/jpeg");
-    }, 3000); // every 3 seconds
+    }, 300); // every 3 seconds
   </script>
-  <button onclick="window.location.href='https://ae39-13-232-23-10.ngrok-free.app/'">⬅ Back to Model Selection</button>
+  <button onclick="window.location.href='http://127.0.0.1:7860/'">⬅ Back to Model Selection</button>
 </body>
 </html>
